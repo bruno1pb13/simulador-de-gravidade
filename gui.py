@@ -35,6 +35,28 @@ canvas = tk.Canvas(window, width=config.CANVAS_WIDTH, height=config.CANVAS_HEIGH
 canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 
+speed_var = tk.DoubleVar(value=0.0)
+
+def on_speed_change(new_value):
+    # new_value é string; converte para float
+    speed = float(new_value)
+    # Define na simulação
+    simulation.time_scale = speed
+
+speed_label = tk.Label(control_frame, text="Velocidade:")
+speed_label.pack(side=tk.LEFT)
+
+speed_scale = tk.Scale(
+    control_frame,
+    from_=-5.0,
+    to=5.0,
+    resolution=.1,
+    orient=tk.HORIZONTAL,
+    variable=speed_var,
+    command=on_speed_change
+)
+speed_scale.pack(side=tk.LEFT, padx=5)
+
 # { nome_corpo: id_do_canvas }
 canvas_objects = {}
 

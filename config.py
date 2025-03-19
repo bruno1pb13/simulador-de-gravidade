@@ -17,21 +17,22 @@ orbital_parameters = {
         "eccentricity": 0.2056,
         "mass": MERCURY_MASS,
         "color": "gray",
-        "radius": 5
+        "radius": 5,
+        "inclination": 10.0,
     },
     "Venus": {
         "semi_major_axis": 200.0,
         "eccentricity": 0.0067,
         "mass": VENUS_MASS,
         "color": "orange",
-        "radius": 8
+        "radius": 8,
     },
     "Earth": {
         "semi_major_axis": 300.0,
         "eccentricity": 0.0167,
         "mass": EARTH_MASS,
         "color": "blue",
-        "radius": 8
+        "radius": 8,
     },
     "Mars": {
         "semi_major_axis": 400.0,

@@ -10,6 +10,8 @@ orbital_state = {}
 simulation_data = {}
 
 delta_time = 1.0
+time_scale = 1.0
+
 current_time = 0
 paused = False
 
@@ -94,7 +96,9 @@ def update_physics():
     if paused:
         return
 
-    current_time += delta_time
+    effective_dt = delta_time * time_scale
+
+    current_time += effective_dt
 
     # Planetas em torno do Sol
     for planet in ["Mercury", "Venus", "Earth", "Mars", "Pluto"]:
@@ -105,8 +109,8 @@ def update_physics():
         acc_x = -G * SUN_MASS * (pos_x / (dist_sun**3))
         acc_y = -G * SUN_MASS * (pos_y / (dist_sun**3))
 
-        orbital_state[planet]["vel_x"] += acc_x * delta_time
-        orbital_state[planet]["vel_y"] += acc_y * delta_time
+        orbital_state[planet]["vel_x"] += acc_x * effective_dt
+        orbital_state[planet]["vel_y"] += acc_y * effective_dt
 
         speed = math.sqrt(
             orbital_state[planet]["vel_x"]**2 +
@@ -136,8 +140,8 @@ def update_physics():
     total_acc_x = acc_moon_sun_x + acc_moon_earth_x
     total_acc_y = acc_moon_sun_y + acc_moon_earth_y
 
-    orbital_state["Moon"]["vel_x"] += total_acc_x * delta_time
-    orbital_state["Moon"]["vel_y"] += total_acc_y * delta_time
+    orbital_state["Moon"]["vel_x"] += total_acc_x * effective_dt
+    orbital_state["Moon"]["vel_y"] += total_acc_y * effective_dt
 
     speed_moon = math.sqrt(
         orbital_state["Moon"]["vel_x"]**2 +
@@ -150,8 +154,8 @@ def update_physics():
 
     # Integrar posição
     for body in orbital_state.keys():
-        orbital_state[body]["pos_x"] += orbital_state[body]["vel_x"] * delta_time
-        orbital_state[body]["pos_y"] += orbital_state[body]["vel_y"] * delta_time
+        orbital_state[body]["pos_x"] += orbital_state[body]["vel_x"] * effective_dt
+        orbital_state[body]["pos_y"] += orbital_state[body]["vel_y"] * effective_dt
 
 def toggle_pause_simulation():
     global paused
